@@ -1,7 +1,7 @@
 <?php
 
 class conexion{
-        protected $hostname_siplan_data_conn = "10.221.12.5";
+        protected $hostname_siplan_data_conn = "localhost";
         protected $username_siplan_data_conn = "siplan2019_USR";
         protected $password_siplan_data_conn = '99yH8}@(pw$E2je)';
 

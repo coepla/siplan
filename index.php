@@ -3,10 +3,6 @@ session_start();
 unset($_SESSION);
 session_destroy();
 
-if(file_exists("install/")){
- header("Location:install/index.php");
-}
-
 require("clases/config.php");
 if(!ACTIVO){
   header("location:views/maintance.html");
