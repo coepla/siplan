@@ -273,6 +273,24 @@ CREATE TABLE `proyectos` (
   KEY `pnd_linea_accion` (`pnd_linea_accion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Programas Presupuestarios';
 
+
+CREATE TABLE `marco_estrategico` (
+  `id_dependencia` smallint(6) NOT NULL DEFAULT '0',
+  `res_poa` text,
+  `activ_sustantivas` text,
+  `mision` text,
+  `vision` text,
+  `objetivo_estrategico` text,
+  `perspec_anual` text,
+  `firmas_validacion` text,
+  `ejercicio` varchar(4) NOT NULL,
+  `completo` char(1) DEFAULT '0',
+  PRIMARY KEY (`id_dependencia`),
+  CONSTRAINT `marco_dep` FOREIGN KEY (`id_dependencia`) REFERENCES `dependencias` (`id_dependencia`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 -- Fin Programas Presupuestarios ------------------
 -- ====================================================================================================================================
 

@@ -14,6 +14,9 @@ if(isset($_GET['token'])){
         case md5(3):
             require('clases/planeacion/marco_estrategico_guarda.php');
         break;
+        case md5(4):
+            require('views/planeacion/nuevo_pp.php');
+        break;
         default:
             require('views/principal.php');
         break;

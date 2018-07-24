@@ -29,6 +29,13 @@ require_once("seguridad/siplan_2017.php");
   <link rel="stylesheet" href="css/ionicons.min.css?v1.0">
   <link rel="stylesheet" href="css/AdminLTE.min.css?v1.0">
   <link rel="stylesheet" href="css/_all-skins.min.css?v1.0">
+   <?php
+if(isset($_GET['token']) == md5(4)){
+?>
+    <link rel="stylesheet" href="css/iCheck_all.css?v1.0">
+<?php } ?>
+
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
