@@ -1,6 +1,12 @@
 <?php
 session_start();
 require('clases/config.php');
+
+if(DESARROLLO){
+  error_reporting(E_ALL);
+  ini_set('display_errors',1);
+}
+
 // Seguridad y variables de sesion a utilizar
 function titulo(){
     if(isset($_GET['token'])){
@@ -10,10 +16,9 @@ function titulo(){
     }
 }
 
-if($_SESSION['keyWord'] != md5(KEYWORD)){
-  header('Location:index.php');
-}
+if($_SESSION['keyWord'] != md5(KEYWORD)){header('Location:index.php');}
 if($_SESSION['activeKey'] != md5(ACTIVEKEY)){header('Location:index.php');}
+
 require_once("seguridad/siplan_2017.php");
 
 ?>
@@ -33,6 +38,8 @@ require_once("seguridad/siplan_2017.php");
 if(isset($_GET['token']) == md5(4)){
 ?>
     <link rel="stylesheet" href="css/iCheck_all.css?v1.0">
+    <link rel="stylesheet" href="css/green.css?v1.2">
+    <link rel="stylesheet" href="css/select2.min.css?v2.1">
 <?php } ?>
 
 

@@ -17,7 +17,16 @@ delimiter ;
 delimiter $$
 create procedure usuario_info (in u varchar(16),in c varchar(32))
 begin
-	SELECT id_usuario,id_perfil,id_dependencia FROM usuarios WHERE usuario = u and password = c;
+	SELECT 
+	us.id_usuario,
+    us.id_perfil,
+    us.id_dependencia,
+    dep.nombre,
+    dep.acronimo
+	FROM 
+	usuarios us
+	inner join dependencias dep on (us.id_dependencia = dep.id_dependencia) 
+	WHERE us.usuario = u and password = c;
 end $$
 delimiter ;
 

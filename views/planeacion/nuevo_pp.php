@@ -1,50 +1,71 @@
+<?php
+
+$consulta_proyecto1 = mysql_query("SELECT * FROM proyectos WHERE id_dependencia = ".$_SESSION['id_dependencia'],$siplan_data_conn);
+$i=0;
+$porcentaje = 0;
+$numproyectos[$i] = 0;
+while($res_proyecto1 = mysql_fetch_array($consulta_proyecto1)){
+        $numproyectos[$i] = $res_proyecto1['no_proyecto'];
+        $i = $i+1;
+        $porcentaje = $porcentaje + $res_proyecto1['ponderacion'];
+}
+$totalproyectos = count($numproyectos);
+$ponderacionmax = 100 - $porcentaje;
+
+?>
+<script>
+   var ponderacion_max = <?php echo $ponderacionmax; ?>;
+   if (ponderacion_max == 0) {
+        alert("no se pueden agregar Programas, ponderacion al 100%");
+        location.href = "main.php?token=eccbc87e4b5ce2fe28308fd9f2a7baf3";
+    }
+</script>
 <div class="content-wrapper">
-<section class="content-header">
-<h1>
-SIPLAN 2019<br>
-<small> Programas Presupuestarios</small>
-</h1>
-</section>
-<section class="content">
-<div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Nuevo Programa Presupuestario - <small>DEP_ACRO</small></h3>
-            </div>
-            <div class="box-body">
-            <ul class="nav nav-pills">
-<li><a href="main.php?token=<?php echo md5(1); ?>"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Lista de Programas Presupuestarios</a></li>
-</ul>
-<hr>
-    <form id="proyecto" name="proyecto" method="post" action="main.php?token=<?php echo md5(5);?>" role="form">
-    <div class="row">
-     <div class="col-md-1">
-        <div class="form-group">
-        <label>No.</label>
-        <input name="no_proyecto" type="number" id="no_proyecto" value="" size="4" maxlength="3" class="form-control"  />
-        </div>
-     </div>
-     <div class="col-md-8">
-     <div class="form-group">
-        <label>Nombre del Proyecto.</label>
-        <input name="nombre" type="text" id="nombre" value="" size="100" class="form-control"  />
-        </div>
-     </div>
-     <div class="col-md-3">
-           <div class="form-group">
-               <label>&nbsp;</label>
-               <br>
-        <input name="no_proyecto" type="checkbox" class="minimal-red" id="no_proyecto" value="" size="4" class="form-control"  />
-               &nbsp;<strong>Proyecto Prioritario</strong>
-        </div>
+    <section class="content-header">
+        <h1>SIPLAN 2019<br><small> Programas Presupuestarios</small></h1>
+    </section>
+    <section class="content">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Nuevo Programa Presupuestario - <small><?php echo  $_SESSION['acronimo_dependencia']; ?> </small></h3>
+                </div>
+                <div class="box-body">
+                    <a href="main.php?token=<?php echo md5(1); ?>" class="btn-sm btn-success">
+    <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Lista de Programas Presupuestarios</a>
 
-    </div>
-    </div>
+                    <hr>
+                    <h4><span class="text text-success">Programa Presupuestario</span></h4>
+                    <form id="proyecto" name="proyecto" method="post" action="main.php?token=<?php echo md5(5);?>" role="form" onsubmit="return guardar();">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>No.</label>
+                                    <input name="no_proyecto" type="number" id="no_proyecto" value="" size="4" maxlength="3" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Nombre del Proyecto.</label>
+                                    <input name="nombre" type="text" id="nombre" value="" size="100" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <br>
+                                    <input name="no_proyecto" type="checkbox" class="minimal-red" id="no_proyecto" value="" size="4" class="form-control" /> &nbsp;
+                                    <strong>Proyecto Prioritario</strong>
+                                </div>
+
+                            </div>
+                        </div>
 
 
-     <?php  if($_SESSION['ejercicio_v3'] == "2018" ) { ?>
-<p>Clasificación Programática
-	<SELECT name='prog_pres' id='prog_pres'>
-        <option>-Seleccione-</option>
+                        <?php  if($_SESSION['ejercicio'] == "2019" ) { ?>
+                        <div class="form-group">
+                            <label>Clasificación Programática</label>
+                            <select name='prog_pres' id='prog_pres' class="form-control select2" required>
+        <option value="">-Seleccione-</option>
 	<?php
 
 
@@ -75,21 +96,31 @@ SIPLAN 2019<br>
 
 
 	?>
-</SELECT></p>
-<?php  } ?>
-    <p>Unidad Responsable
-        <input name="u_responsable" type="text" id="u_responsable" value="" size="100" />
-    </p>
-     <p>Nombre del Titular
-        <input name="titular" type="text" id="titular" value="" size="100" />
-    </p>
-    <hr>
-    <b>Alineaci&oacute;n Plan Estatal de Desarrollo 2016-2021</b>
-    <p>Eje
-    <br>
-        <select name="eje" id="eje" onchange="agregalinea(this.value)">
+</select>
+                            </p>
+                            <?php  } ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Unidad Responsable</label>
+                                    <input name="u_responsable" type="text" id="u_responsable" value="" size="100" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nombre del Titular</label>
+                                    <input name="titular" type="text" id="titular" value="" size="100" class="form-control" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4><span class="text text-success">Alineaci&oacute;n Plan Estatal de Desarrollo 2016-2021</span></h4>
+                        <div class="form-group">
+                            <label>Eje</label>
+                            <select name="eje" id="eje" onchange="agregalinea(this.value)" class="form-control select2" required>
             <?php
-            echo "<option value='0'>-seleccione-</option>";
+            echo '<option value="">-seleccione-</option>';
             $consulta_n_eje = mysql_query("SELECT * FROM eje" ,$siplan_data_conn) or die (mysql_error());
             $i=1;
             while($res_n_eje1 = mysql_fetch_array($consulta_n_eje)){
@@ -98,25 +129,27 @@ SIPLAN 2019<br>
             }
             ?>
         </select>
-        <br />
-        L&iacute;nea
-<br>
-        <select name="linea" id="linea" onchange="agregaestrategia(this.value)">
+
+                            <label>L&iacute;nea</label>
+
+                            <select name="linea" id="linea" onchange="agregaestrategia(this.value)" class="form-control select2" required>
             <?php
-            echo "<option value='0'>-seleccione-</option>";
+            echo '<option value="">-seleccione-</option>';
             ?>
         </select>
-        <br />
-        Estrategia
-<br>
-        <select name="estrategia" id="estrategia">
+
+                            <label>Estrategia</label>
+
+                            <select name="estrategia" id="estrategia" class="form-control select2" required>
             <?php
-            echo "<option value='0'>-seleccione-</option>";
+            echo '<option value="">-seleccione-</option>';
             ?>
         </select>
-    </p>
-    <hr>
-    <b> Alineaci&oacute;n Plan Nacional de Desarrollo 2013-2018</b>
+                            </p>
+                        </div>
+                        <hr>
+                        <?php /*    
+<b> Alineaci&oacute;n Plan Nacional de Desarrollo 2013-2018</b>
 
 <p>Meta Nacional
 <select name="pnd_eje" id="pnd_eje" onchange="llena_combo_objetivo(this.value)">
@@ -144,31 +177,35 @@ SIPLAN 2019<br>
     <option value="0">-Seleccione-</option>
 </select></p>
 
-    <hr>
-    <b>Objetivo Estrat&eacute;gico </b>
-    <p>Dependencia o Entidad:
-        <input type="text" size="64" value="<?php echo $_SESSION['nombre_dependencia_v3']; ?>" enabled="false"/>
-    </p>
+    <hr> */ ?>
 
-    <hr>
-    <p>Ponderaci&oacute;n
-        <input name="ponderacion" type="text" id="ponderacion" size="5" maxlength="3"  value="" /> debe ser menor o igual a <b><?php echo $ponderacionmax; ?></b>
-    </p>
+                        <h4><span class="text text-success">Objetivo Estrat&eacute;gico</span></h4>
+                        <div class="form-group">
 
-    <p>Prop&oacute;sito<br />
-        <label for="proposito"></label>
-        <textarea name="proposito" id="proposito" cols="100" rows="5"></textarea>
-    </p>
-    <p>Diagn&oacute;stico<br />
-        <textarea name="justificacion" id="justificacion" cols="100" rows="5"></textarea>
-    </p>
+                            <label>Dependencia o Entidad:</label>
+                            <input type="text" size="64" value="<?php echo $_SESSION['nombre_dependencia']; ?>" disabled class="form-control" />
 
-       Sector Poblacional
-        <select name="gvulnerable" id="gvulnerable">
+                            <hr>
+
+                            <label>Ponderaci&oacute;n</label>
+                            <input name="ponderacion" type="number" id="ponderacion" size="5" maxlength="3" value="" / min="1" max="<?php echo $ponderacionmax; ?>" required> debe ser menor o igual a <b><span class="badge badge-danger"><?php echo $ponderacionmax; ?></span></b>
+                            <hr>
+
+                            <label>Prop&oacute;sito</label>
+                            <textarea name="proposito" id="proposito" cols="100" rows="5" class="form-control" required></textarea>
+
+                            <label>Diagn&oacute;stico</label>
+                            <textarea name="justificacion" id="justificacion" cols="100" rows="5" class="form-control" required></textarea>
+                            </p>
+                        </div>
+
+
+                        Sector Poblacional
+                        <select name="gvulnerable" id="gvulnerable" required>
             <?php
             $consulta_n_vulnera = mysql_query("SELECT * FROM grupo_vulnerable",$siplan_data_conn) or die (mysql_error());
             $num = mysql_num_rows($consulta_n_vulnera);
-            echo "<option value='0'>-seleccione-</option>";
+            echo "<option value=''>-seleccione-</option>";
             $i=1;
             while($res_n_vulnera = mysql_fetch_array($consulta_n_vulnera)){
                 echo "<option value=\"". $i ."\"> ".html_entity_decode($res_n_vulnera['descripcion'])."</option>";
@@ -177,25 +214,22 @@ SIPLAN 2019<br>
             mysql_free_result($consulta_n_vulnera);
             ?>
         </select>
-    </p>
-    <p>Beneficiarios Hombres
-        <input name="ben_h" type="text" id="ben_h" value="" />
-        Beneficiarios Mujeres
-        <input name="ben_m" type="text" id="ben_m" value="" />
-    </p>
-    <p>
-        Unidad de Medida
-        <input name="u_medida" type="text" id="u_medida" value="" />
-        Programado Anual
-        <input name="cantidad" type="text" id="cantidad" value="" />
-         Prog. Semestral
-        <input name="p_semestral" type="text" id="p_semestral" value="" />
-    </p>
-    <p>Finalidad
-        <select name="finalidad" id="finalidad" onchange="agregafuncion(this.value)">
+                        </p>
+                        <p>Beneficiarios Hombres
+                            <input name="ben_h" type="number" id="ben_h" value="" required /> Beneficiarios Mujeres
+                            <input name="ben_m" type="number" id="ben_m" value="" required />
+                        </p>
+                        <p>
+                            Unidad de Medida
+                            <input name="u_medida" type="text" id="u_medida" value="" required /> Programado Anual
+                            <input name="cantidad" type="number" id="cantidad" value="" required /> Prog. Semestral
+                            <input name="p_semestral" type="number" id="p_semestral" value="" required />
+                        </p>
+                        <p>Finalidad
+                            <select name="finalidad" id="finalidad" onchange="agregafuncion(this.value)" required>
             <?php
             $consulta_n_finalidad = mysql_query("SELECT * FROM finalidad ",$siplan_data_conn) or die (mysql_error());
-            echo "<option value='0'>-seleccione-</option>";
+            echo "<option value=''>-seleccione-</option>";
             $i=1;
             while($res_n_finalidad = mysql_fetch_array($consulta_n_finalidad)){
                 echo "<option value=\"". $i ."\"> ".html_entity_decode($res_n_finalidad['nombre'])."</option>";
@@ -203,42 +237,45 @@ SIPLAN 2019<br>
             }
             ?>
         </select>
-        <input type="hidden" name="id_finalidad" id="id_finalidad"  />
-        <input type="hidden" name="id_proyecto" id="id_proyecto" value=""  />
-    </p>
-    <p>
-        Funci&oacute;n
-        <select name="funcion" id="funcion" onchange="agregasubfuncion(this.value)">
+                            <input type="hidden" name="id_finalidad" id="id_finalidad" />
+                            <input type="hidden" name="id_proyecto" id="id_proyecto" value="" />
+                        </p>
+                        <p>
+                            Funci&oacute;n
+                            <select name="funcion" id="funcion" onchange="agregasubfuncion(this.value)" required>
             <?php
             echo "<option value='0'>-seleccione-</option>";
 
             ?>
         </select>
-    </p>
-    <p>Subfunci&oacute;n
+                        </p>
+                        <p>Subfunci&oacute;n
 
-        <select name="subfuncion" id="subfuncion">
+                            <select name="subfuncion" id="subfuncion" required>
             <?php
             echo "<option value='0'>-seleccione-</option>";
 
             ?>
         </select>
-    </p>
-    <p>Observaciones<br />
-        <label for="observaciones"></label>
-        <textarea name="observaciones" id="observaciones" cols="100" rows="5"></textarea>
-    </p>
-</form>
+                        </p>
+                        <p>Observaciones<br />
+                            <label for="observaciones"></label>
+                            <textarea name="observaciones" id="observaciones" cols="100" rows="5"></textarea>
+                        </p>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Guardar</button>
+                        <button class="btn btn-danger" onclick="regresar();"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;Cancelar</button>
+                    </form>
 
 
-<ul class="nav nav-pills">
-<li><a href="javascript:guardar()"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Guardar</a></li>
-<li><a href="javascript:regresar()"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;Cancelar</a></li>
-</ul>
 
-<i class="icon-dropbox"></i>
+                </div>
+
             </div>
-
-</div>
-    </section>
-</div>
+        </section>
+    </div>
+<script>
+function guardar(){
+    console.log("called save");
+    return false;
+}
+</script>

@@ -63,6 +63,8 @@ if( $resultado[0] == '1'){
         $_SESSION['id_usuario'] = $resultado[0];
         $_SESSION['id_perfil'] = $resultado[1];
         $_SESSION['id_dependencia'] = $resultado[2];
+        $_SESSION['nombre_dependencia'] = $resultado[3];
+        $_SESSION['acronimo_dependencia'] = $resultado[4];
         $_SESSION['activeKey'] = md5(ACTIVEKEY);
         $_SESSION['ejercicio'] = 2019;
         

@@ -9,14 +9,11 @@
   })
 </script>
 <?php
+//------- nuevo prog pres ----//
 if(isset($_GET['token']) == md5(4)){
 ?>
 <script src="js/icheck.min.js?v.1.0"></script>
-<script>
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    });
-</script>
+<script src="js/planeacion/nuevo_pp.js?v=1.2"></script>
+<script src="js/select2.full.min.js?v2.0"></script>
 
 <?php } ?>

@@ -1,9 +1,10 @@
-// insertar sesion key para evitar entrada desde otro lado
-
 <?php
+
 $consulta_marco = mysql_query("SELECT HIGH_PRIORITY count(*) 
-FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia']." AND ejercicio = ".$_SESSION['ejercicio'],$siplan_data_conn);
+FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia']." AND ejercicio = ".$_SESSION['ejercicio'],$siplan_data_conn) or die (mysql_error());
+
 $res_marco = mysql_result($consulta_marco,0);
+
 if($res_marco==0){
 	echo "<script type='text/javascript'>
 	   alert('Para aprobar sus Programas Presupuestarios primero debe completar el Marco Estrat\u00e9gico');
