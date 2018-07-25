@@ -34,6 +34,7 @@ require_once("seguridad/siplan_2017.php");
   <link rel="stylesheet" href="css/ionicons.min.css?v1.0">
   <link rel="stylesheet" href="css/AdminLTE.min.css?v1.0">
   <link rel="stylesheet" href="css/_all-skins.min.css?v1.0">
+
    <?php
 if(isset($_GET['token']) == md5(4)){
 ?>

@@ -9,3 +9,4 @@ GRANT EXECUTE ON PROCEDURE siplan2019.usuario_info TO 'siplan2019_sel'@'localhos
 GRANT SELECT ON siplan2019.* TO 'siplan2019_ins'@'localhost';
 GRANT INSERT ON siplan2019.* TO 'siplan2019_ins'@'localhost';
 GRANT EXECUTE ON PROCEDURE siplan2019.historial TO 'siplan2019_ins'@'localhost';
+Flush privileges;
