@@ -12,6 +12,8 @@ class conexion{
 	  $this->conexion = mysql_pconnect($this->hostname_siplan_data_conn,$this->username_siplan_data_conn,$this->password_siplan_data_conn) or die($this->error_conexion);
           return $this->conexion;
 	}
+
+
 }
 
 $conn = new conexion;

@@ -80,3 +80,13 @@ insert into proyectos_ppi (id_proyecto,nom_proyecto_ppi) values (last_insert_id(
 
 end $$
 delimiter ;
+
+
+delimiter $$
+create procedure contar_indicadores_pp (in id_proyecto int(11))
+begin
+set @c_indicadores_fin = (select count(*) from indicadores_fin WHERE id_pp = id_proyecto);
+set @c_indicadores_proposito = (select count(*) from indicadores_proposito WHERE id_pp = id_proyecto);
+select (c_indicadores_fin + c_indicadores_proposito);
+end $$
+delimiter ;

@@ -1,84 +1,16 @@
 <?php
-
-$consulta_marco = mysql_query("SELECT HIGH_PRIORITY count(*) 
-FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia']." AND ejercicio = ".$_SESSION['ejercicio'],$siplan_data_conn) or die (mysql_error());
-
-$res_marco = mysql_result($consulta_marco,0);
-
-if($res_marco==0){
+$conexion = $conn->conectar(1);
+$consulta_marco = $conexion->query("SELECT HIGH_PRIORITY count(*) FROM marco_estrategico WHERE id_dependencia = ".$_SESSION['id_dependencia']." AND ejercicio = ".$_SESSION['ejercicio']);
+$res_marco = $consulta_marco->fetch_array();
+$conexion->close();
+unset($conexion);
+unset($consulta_marco);
+if($res_marco[0]==0){
 	echo "<script type='text/javascript'>
 	   alert('Para aprobar sus Programas Presupuestarios primero debe completar el Marco Estrat\u00e9gico');
 	</script>";
 }
-?> 
-<style type="text/css" title="currentStyle">
-
-.tooltip {
-
-  //border-bottom: 1px dotted #000000; color: #000000; outline: none;
-
-  cursor: help; text-decoration: none;
-
-  position: relative;
-
-}
-
-.tooltip span {
-
-  margin-left: -999em;
-
-  position: absolute;
-
-}
-
-.tooltip:hover span {
-
-  border-radius: 5px 5px; -moz-bord	er-radius: 5px; -webkit-border-radius: 5px; 
-
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
-
-  font-family: Calibri, Tahoma, Geneva, sans-serif;
-
-  position: absolute; left: 1em; top: 2em; z-index: 99;
-
-  margin-left: 0; width: 250px;
-
-}
-
-.tooltip:hover img {
-
-  border: 0; margin: -10px 0 0 -55px;
-
-  float: left; position: absolute;
-
-}
-
-.tooltip:hover em {
-
-  font-family: Candara, Tahoma, Geneva, sans-serif; font-size: 1.2em; font-weight: bold;
-
-  display: block; padding: 0.2em 0 0.6em 0;
-
-}
-
-.classic { padding: 0.8em 1em; }
-
-.custom { padding: 0.5em 0.8em 0.8em 2em; }
-
-* html a:hover { background: transparent; }
-
-.classic {background: #FFFFAA; border: 1px solid #FFAD33;  }
-
-.critical { background: #FFCCAA; border: 1px solid #FF3334;	}
-
-.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
-
-.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
-
-.warning { background: #FFFFAA; border: 1px solid #FFAD33; }
-
-</style>
-
+?>
 <script type="text/JavaScript">
 function eliminar_proyecto(a){
 	r=confirm("\u00bf Desea eliminar el Programa Presupuestario?");
@@ -91,7 +23,6 @@ function ponderacion_full(){
 	alert("Ponderaci\u00f3n completa, elimine o edite otro(s) Programa(s) Presupuestario(s)")
 }
 </script>
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -99,9 +30,7 @@ function ponderacion_full(){
         SIPLAN 2019<br>
         <small> Programas Presupuestarios</small>
       </h1>
-
     </section>
-
     <section class="content">
 <div class="box">
             <div class="box-header">
@@ -109,21 +38,24 @@ function ponderacion_full(){
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-           
-
 <ul class="nav nav-pills">
   <li><a href="main.php?token=<?php echo(md5(2));?>"><span class="glyphicon glyphicon-edit"></span>&nbsp;Marco Estrategico </a></li>
  <?php
-   $conulta_pondera_proyectos = "SELECT HIGH_PRIORITY sum(ponderacion) FROM proyectos WHERE id_dependencia = ".$_SESSION['id_dependencia'];
-   $EjecutarConsulta = mysql_query($conulta_pondera_proyectos,$siplan_data_conn);
-   if(mysql_result($EjecutarConsulta, 0)==100){
+    $conulta_pondera_proyectos = "SELECT HIGH_PRIORITY sum(ponderacion) FROM proyectos WHERE id_dependencia = ".$_SESSION['id_dependencia'];
+    $conexion = $conn->conectar(1);
+    $EjecutarConsulta = $conexion->query($conulta_pondera_proyectos);
+    $res_pondera = $EjecutarConsulta->fetch_array();
+    $conexion->close();
+    unset($conexion);
+    unset($EjecutarConsulta);
+    if($res_pondera[0] >= 100){
 ?>
 <li><a href="javascript:ponderacion_full()"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Programa Presupuestario</a></li>
 <?php
 }else{
 ?>
 	<li><a href="main.php?token=<?php echo md5(4); ?>"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Programa Presupuestario</a></li>
- <?php } ?>
+ <?php } unset($res_pondera); ?>
 
 
   <li><a href="rpts/general_proyectos.php" target="_blank"><span class="glyphicon glyphicon-print"></span>&nbsp;Imprimir</a></li>
@@ -150,34 +82,39 @@ function ponderacion_full(){
   </thead>
   <tbody>
   <?php
-    $consulta_proyectos = mysql_query("SELECT HIGH_PRIORITY  
+    $conexion =$conn->conectar(1);
+    $consulta_proyectos = $conexion->query("SELECT HIGH_PRIORITY
 pr.id_proyecto as id_proyecto,
 pr.no_proyecto as no_proyecto,
 pr.nombre as nombre,
+pr.clasificacion as clasificacion,
 est.nombre as estrategia,
 pr.ponderacion as ponderacion,
 pr.estatus as estatus
 FROM
 proyectos as pr
 inner join estrategias as est on(pr.id_estrategia = est.id_estrategia)
-WHERE pr.id_dependencia =".$_SESSION['id_dependencia'] ,$siplan_data_conn)or die (mysql_error());
-    while ($resproyectos = mysql_fetch_assoc($consulta_proyectos)) {
+WHERE pr.id_dependencia =".$_SESSION['id_dependencia']);
+      $conexion->close();
+      unset($conexion);
+      while ($resproyectos = $consulta_proyectos->fetch_assoc()) {
 	    $id_proyecto= $resproyectos['id_proyecto'];
 	    $status_proyecto = $resproyectos['estatus'];
-
-            $consulta_componentes = mysql_query("SELECT HIGH_PRIORITY  sum(ponderacion) From componentes WHERE id_proyecto = ".$id_proyecto,$siplan_data_conn) or die(mysql_error());
-	  	$num_componentes = mysql_result($consulta_componentes, 0);
- 	 	
-$consulta_indicadores = mysql_query("SELECT HIGH_PRIORITY count(*) FROM indicadores_proyecto WHERE id_proyecto = ".$id_proyecto." AND completado=1",$siplan_data_conn) or die(mysql_error());
-	 	$res_indicadores = mysql_result($consulta_indicadores,0);
-		
-		$consulta_componentes1 =mysql_query("SELECT HIGH_PRIORITY id_componente FROM componentes WHERE id_proyecto = ".$id_proyecto,$siplan_data_conn) or die(mysql_error());
-		$num_componentes2 = mysql_num_rows($consulta_componentes1);
+        $conexion = $conn->conectar(1);
+        $consulta_componentes = $conexion->query("SELECT HIGH_PRIORITY  sum(ponderacion) From componentes WHERE id_proyecto = ".$id_proyecto);
+	  	$num_componentes = $consulta_componentes->fetch_array();
+ 	 	$consulta_indicadores = $conexion->query("call contar_indicadores_pp($id_proyecto)") or die("error linea 104".$conexion->error);
+        $res_indicadores = $consulta_indicadores->fetch_array();
+        $conexion->close();
+        unset($conexion);
+        $conexion = $conn->conectar(1);
+		$consulta_componentes1 =$conexion->query("SELECT HIGH_PRIORITY id_componente FROM componentes WHERE id_proyecto = ".$id_proyecto) or die ($conexion->error);
+		$num_componentes2 = $consulta_componentes1->fetch_array();
     	 
        $total_acciones =0;
     	$suma_accion =0;
 		while($res_componente1 = mysql_fetch_array($consulta_componentes1)){
-                $consulta_accion1 = mysql_query("SELECT HIGH_PRIORITY sum(ponderacion) as suma FROM acciones WHERE id_componente = ".$res_componente1['id_componente'],$siplan_data_conn) or die(mysql_error());
+                $consulta_accion1 = mysql_query("SELECT HIGH_PRIORITY sum(ponderacion) as suma FROM acciones WHERE id_componente = ".$res_componente1['id_componente'],$siplan_data_conn) or die("error linea 113: ".mysql_error());
 				$res_accion1 = mysql_fetch_array($consulta_accion1);
 				$suma_accion =$suma_accion+$res_accion1['suma'];
 	

@@ -20,6 +20,7 @@ if($_SESSION['keyWord'] != md5(KEYWORD)){header('Location:index.php');}
 if($_SESSION['activeKey'] != md5(ACTIVEKEY)){header('Location:index.php');}
 
 require_once("seguridad/siplan_2017.php");
+require_once("clases/conexion.php");
 
 ?>
 <!DOCTYPE html>
