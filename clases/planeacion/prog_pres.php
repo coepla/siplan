@@ -5,9 +5,6 @@ ini_set('display_errors',1);
 session_start();
 require("../config.php");
 require("../conexion.php");
-
-
-
 class programa_presupuestario{
     function guardar_ppp($variables,$c){
         extract($variables);
@@ -17,7 +14,7 @@ class programa_presupuestario{
         '$nombre',
         1,
         $prog_pres,
-        1,
+        '$u_responsable',
         '$titular',
         $eje,
         $linea,
@@ -26,7 +23,7 @@ class programa_presupuestario{
         $pnd_objetivo,
         $pnd_estrategia,
         $pnd_linea,
-        80,
+        $ponderacion,
         '$proposito',
         '$diagnostico',
         $gvulnerable,
@@ -45,7 +42,47 @@ class programa_presupuestario{
             // consulta guardar istorial
             return "guardado";
         }else{
-            return "error".$conexion->error();
+            return "error".$conexion->error;
+        }
+
+    }
+    function guardar_ppi($variables,$c){
+        extract($variables);
+        $dependencia = $_SESSION['id_dependencia'];
+        $conexion = $c->conectar(2);
+        $consulta = "CALL guardar_ppi($no_proyecto,
+        '$nombre',
+        0,
+        $prog_pres,
+        '$u_responsable',
+        '$titular',
+        $eje,
+        $linea,
+        $estrategia,
+        $pnd_eje,
+        $pnd_objetivo,
+        $pnd_estrategia,
+        $pnd_linea,
+        $ponderacion,
+        '$proposito',
+        '$diagnostico',
+        $gvulnerable,
+        $ben_h,
+        $ben_m,
+        '$u_medida',
+        $prog_anual,
+        $p_semestral,
+        $finalidad,
+        $funcion,
+        $subfuncion,
+        '$observaciones',
+        $dependencia
+        )";
+        if( $conexion->query($consulta) ){
+            // consulta guardar istorial
+            return "guardado";
+        }else{
+            return "error".$conexion->error;
         }
         
     }
@@ -61,6 +98,6 @@ switch($_POST['accion']){
     break;
 
     case "guardar_ppi":
-        echo "guardado";
+        echo $pp->guardar_ppi($_POST,$conn);
     break;    
 }

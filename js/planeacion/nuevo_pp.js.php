@@ -494,12 +494,23 @@ $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck(
     radioClass: 'iradio_minimal-red'
 });
 
-
-
 function validar(){
     // Checar que los campos no esten vacios y sean del tipo solicitado
     // esta funcion se require solamente para versiones anteriores a iexplorer 11 y navegadores que no soportan html5
     if( $('#no_proyecto').val().length < 1 || isNaN( $('#no_proyecto').val())){ alert('error en el numero de proyecto'); return false; }
+
+    var proyectosid = new Array(<?php for($x=0;$x<$totalproyectos;$x=$x+1){
+        echo $numproyectos[$x].",";
+    }  echo "0"; ?>);
+    for(x=0;x<proyectosid.length;x++){
+        if(document.getElementById('no_proyecto').value == proyectosid[x]){
+            alert("este n\u00famero de proyecto ya existe porfavor borre el Programa o seleccione otro n\u00famero");
+            document.getElementById('no_proyecto').value = "";
+            return false;
+        }
+    }
+
+
     if( $('#nombre').val().lenght < 8 ){ alert('error en el nombre del proyecto'); return false;}
     if( $('#prog_pres').val().trim() === '') { alert('Debe seleccionar clasificacion programatica'); return false;}
     if( $('#u_responsable').val().lenght < 8 ){ alert('error en unidad responsable'); return false;}
@@ -524,20 +535,21 @@ function validar(){
     if( $('#funcion').val().trim() === '') { alert('Debe seleccionar la funcion'); return false;}
     if( $('#subfuncion').val().trim() === '') { alert('Debe seleccionar la subfuncion'); return false;}
     return true;
+
+
 }
 
 function guardar(){
     var validado = validar();
     if($('#prioritario').prop('checked')){ var prioritario = "guardar_ppp"; } else { var prioritario = "guardar_ppi";}
-    console.log(prioritario);
     if(validado){
         validado = false;
      $.ajax({
         method: "POST",
         url: "clases/planeacion/prog_pres.php",
-        data: { 
+        data: {
             accion: prioritario,
-            no_proyecto: $('#no_proyecto').val(), 
+            no_proyecto: $('#no_proyecto').val(),
             nombre: $('#nombre').val(),
             prog_pres: $('#prog_pres').val(),
             u_responsable: $('#u_responsable').val(),
@@ -565,9 +577,11 @@ function guardar(){
         }
      })
         .done(function( msg ) {
-        alert( "Data Saved: " + msg );
-    });    
-        
+        alert( 'Se ha guardado correctamente el programa presupuestario' );
+        location.href = 'main.php?token=c4ca4238a0b923820dcc509a6f75849b';
+    });
+
     }
     return false;
 }
+

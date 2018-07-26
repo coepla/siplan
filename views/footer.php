@@ -13,9 +13,8 @@
 if(isset($_GET['token']) == md5(4)){
 ?>
 <script src="js/icheck.min.js?v.1.0"></script>
-<script src="js/planeacion/nuevo_pp.js?v=2.5"></script>
-
-
-
-
-<?php } ?>
+<script type="text/javascript">
+<?php
+require("js/planeacion/nuevo_pp.js.php");
+} ?>
+</script>
