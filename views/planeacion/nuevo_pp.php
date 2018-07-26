@@ -246,7 +246,7 @@ mysql_free_result($consulta_n_vulnera);
                             <textarea name="observaciones" id="observaciones" cols="100" rows="5"></textarea>
                         </p>
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Guardar</button>
-                        <button class="btn btn-danger" onclick="regresar();"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;Cancelar</button>
+                        <a class="btn btn-danger" href="main.php?token=c4ca4238a0b923820dcc509a6f75849b"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;Cancelar</a>
     </div>
                     </form>
 
