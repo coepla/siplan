@@ -3,11 +3,16 @@
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="img/usuario.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
-           DEP ACRO
+            <? if($_SESSION['id_perfil'] != 2){
+            echo "<select onchange='cambiar_dep(this.value);'>
+               <option>".$_SESSION['acronimo_dependencia']."</option>
+            </select>";
+}else{
+           echo $_SESSION['acronimo_dependencia']; }?>
         </div>
       </div>
 <hr>
@@ -134,6 +139,7 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Avance Fis/Fin</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Cuenta Pública</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Unidades Responsables</a></li>
           </ul>
         </li>
 

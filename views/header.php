@@ -74,13 +74,13 @@ if(isset($_GET['token']) == md5(4)){
 
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="img/usuario.png" class="user-image">
               <span class="hidden-xs">Usuario Nombre</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="img/usuario.png" class="img-circle">
 
                 <p>
                   Nombre de Usuario
