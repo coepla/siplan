@@ -32,7 +32,7 @@ function ponderacion_full(){
       </h1>
     </section>
     <section class="content">
-<div class="box">
+<div class="box box-success">
             <div class="box-header">
               <h3 class="box-title">Listado de Programas Presupuestarios - <small>DEP_ACRO</small></h3>
             </div>
@@ -62,23 +62,24 @@ function ponderacion_full(){
   <li><a href="rpts/general_proyectos_xls.php" target="_blank"><span class="glyphicon glyphicon-export"></span>&nbsp;Exportar a XLS</a></li>
 </ul> 
 <hr>
-
-
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+<table id="example1" class="table table-bordered table-striped table-hover">
 <thead>
 <tr>
-    <td width="5%"><div align="center">No. </div></td>    
-	<td width="27%"><div align="center">Programa Presupuestario</div></td>
-	<td width="5%"><div align="center">PED</div></td>
-	<td width="9%"><div align="center">Ponderaci&oacute;n</div></td>
-	<td width="10%"><div align="center">Estatus</div></td>
-	<td width="8%"><div align="center">Indicadores</div></td>
-	<td width="8%"><div align="center">Componentes</div></td>
-	<td width="7%"><div align="center">Info.</div></td>    
-	<td width="7%"><div align="center">Aprobar</div></td>
-	<td width="7%"><div align="center">Editar</div></td>
-	<td width="7%"><div align="center">Eliminar</div></td>
-  </tr>
+    <th><small>No.</small></th>    
+	<th><small>Nombre</small></th>
+    <th><small>PPP</small></th>
+   
+	<th><small>Estatus</small></th>
+	<th><small>Indicadores</small></th>
+	<th><small>Componentes</small></th>
+	<th><small>Info.</small></th>    
+	<?php  if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 2 || $_SESSION['id_perfil'] == 3) {  ?>
+    <th><small>Aprobar</small></th>
+	<th><small>Editar</small></th>
+	<th><small>Eliminar</small></th>
+  <?php } ?>
+    
+    </tr>
   </thead>
   <tbody>
   <?php
@@ -108,12 +109,12 @@ WHERE pr.id_dependencia =".$_SESSION['id_dependencia']);
         $conexion->close();
         unset($conexion);
         $conexion = $conn->conectar(1);
-		$consulta_componentes1 =$conexion->query("SELECT HIGH_PRIORITY id_componente FROM componentes WHERE id_proyecto = ".$id_proyecto) or die ($conexion->error);
+		$consulta_componentes1 =$conexion->query("SELECT HIGH_PRIORITY id_componente FROM componentes WHERE id_proyecto = ".$id_proyecto);
 		$num_componentes2 = $consulta_componentes1->fetch_array();
     	 
        $total_acciones =0;
     	$suma_accion =0;
-		while($res_componente1 = mysql_fetch_array($consulta_componentes1)){
+		while($res_componente1 = $consulta_componentes1->fetch_array()){
                 $consulta_accion1 = mysql_query("SELECT HIGH_PRIORITY sum(ponderacion) as suma FROM acciones WHERE id_componente = ".$res_componente1['id_componente'],$siplan_data_conn) or die("error linea 113: ".mysql_error());
 				$res_accion1 = mysql_fetch_array($consulta_accion1);
 				$suma_accion =$suma_accion+$res_accion1['suma'];
@@ -121,20 +122,16 @@ WHERE pr.id_dependencia =".$_SESSION['id_dependencia']);
 		}
 	     switch ($resproyectos['estatus']){
 		   case 0:
-		   $status = "Sin aprobar";
-		   $css_color = "gradeX";
+		   $status = '<span class="text text-danger"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Sin aprobar</span>';
 		   break;
 		   case 1:
-		   $status = "Aprob. Dependencia";
-		   $css_color = "gradeB";
+		   $status = '<span class="text text-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Aprob. Dep.</span>';
 		   break;
 		   case 2:
-		   $status = "Aprob. COEPLA";
-		   $css_color = "gradeA";
+		   $status = '<span class="text text-success"><i class="fa fa-check-circle" aria-hidden="true"></i>Aprob. COEPLA</sapn>';
 		   break;   
 		   case 3:
 		   $status = "Inactivo";
-		   $css_color = "gradeU";
 		   break; 
 	   }
 
@@ -142,20 +139,19 @@ WHERE pr.id_dependencia =".$_SESSION['id_dependencia']);
   $max_Acc = 	$suma_accion/$num_componentes2;
   }
   ?>
- <tr class="<?php echo $css_color; ?>">
-    <td><?php echo $resproyectos['no_proyecto']; ?></td>    
-     <td  align="left"><?php  echo '<a class="tooltip" style="text-decoration:none;color:#333;; cursor:pointer;"> '.substr($resproyectos['nombre'],0,32).'...'.'<span class="custom classic">'.$resproyectos['nombre'].'</span></a>';?></td>
-    <td><?php print(substr($resproyectos['estrategia'],0,5)); ?></td>
-    <td><div align="center"><?php echo $resproyectos['ponderacion']; ?>%</div></td>
-    <td><div align="center"><?php echo $status; ?></div></td>
-    <td valign="middle"><div align="center"><a href="main.php?token=<?php print(md5(11));?>&id_proyecto=<?php echo"$id_proyecto";?>"><span class="glyphicon glyphicon-stats"></span></a></div></td>
+ <tr>
+    <td><?php echo $resproyectos['no_proyecto']; ?></td>
+    <td><?php echo $resproyectos['nombre']; ?></td>
+    <td><?php if($resproyectos['clasificacion'] == 1){echo '<span class="text text-success">  <i class="fa fa-check-circle" aria-hidden="true"></i> </span>'; }else{ echo "-"; }  ?></td>
+    <td><?php echo $status; ?></td>
+    <td valign="middle"><div align="center"><a href="main.php?token=<?php print(md5(5));?>&id_proyecto=<?php echo"$id_proyecto";?>"><span class="glyphicon glyphicon-stats"></span></a></div></td>
     <td valign="middle"><div align="center"><a href="main.php?token=<?php print(md5(13));?>&id_proyecto=<?php echo"$id_proyecto";?>"><span class="glyphicon glyphicon-list"></span></a></div></td>
     <td valign="middle"><div align="center"><a href="main.php?token=<?php print(md5(25));?>&id_proyecto=<?php echo"$id_proyecto";?>"><span class="glyphicon glyphicon-info-sign"></span></a></div></td>
     
     <?php  
-
+ if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 2 || $_SESSION['id_perfil'] == 3) {  
     if($status_proyecto==0 AND $num_componentes==100 AND $max_Acc==100 AND $res_indicadores>0 AND $res_marco>0){ 
-    $status_proyecto = 3;
+        $status_proyecto = 3;
     }
 
     switch($status_proyecto){
@@ -173,41 +169,50 @@ WHERE pr.id_dependencia =".$_SESSION['id_dependencia']);
     	echo "<td valign='middle'><div align='center'> <span class='glyphicon glyphicon-minus'> </div></td>";
     	break;
     }
-if($status_proyecto==0){ ?>
+     
+     if($status_proyecto==0){ ?>
     <td valign="middle"><div align="center"><a href="main.php?token=<?php print(md5(8));?>&id_proyecto=<?php echo"$id_proyecto";?>"><span class="glyphicon glyphicon-pencil"></span></a></div></td>
     <?php } ?>
-    <?php if($status_proyecto!=0){ ?>
-    <td valign="middle"><div align="center"><span class="glyphicon glyphicon-minus"></span></div></td>	
-    <?php } ?>
-    <td valign="middle"><div align="center">
-    <?php if($num_componentes==0){ ?>
-    	<a href="javascript:eliminar_proyecto('<?php echo"$id_proyecto";?>')"><span class="glyphicon glyphicon-trash"></span></a>
-    	<?php } else { ?>
-    		<span class="glyphicon glyphicon-minus"></span>
-    		<?php } ?>
-    </div></td>
+    
+    <?php if($status_proyecto != 0 ){ ?>
+      <td valign="middle"><div align="center"><span class="glyphicon glyphicon-minus"></span> </div></td>	
+    <?php } else {
+         if($num_componentes[0] == 0){ ?>
+             <td valign="middle"><div align="center">
+             <a href="javascript:eliminar_proyecto('<?php echo"$id_proyecto";?>')"><span class="glyphicon glyphicon-trash text-danger"></span></a>
+                 </div></td>     
+     <?php }else{ ?>
+             <td valign="middle"><div align="center">
+             <span class="glyphicon glyphicon-minus">  </span>
+                 </div></td>
+        <?php }} ?>
+    
+  
  </tr>  
-    <?php } ?>
+    <?php } } ?>
+    
+    
     </tbody>
-    <tfoot>
-     <tr>
-    <td width="5%"><div align="center">No. </div></td>    
-	<td width="27%"><div align="center">Programa Presupuestario</div></td>
-	<td width="5%"><div align="center">PED</div></td>
-	<td width="9%"><div align="center">Ponderaci&oacute;n</div></td>
-	<td width="10%"><div align="center">Estatus</div></td>
-	<td width="8%"><div align="center">Indicadores</div></td>
-	<td width="8%"><div align="center">Componentes</div></td>
-	<td width="7%"><div align="center">Info.</div></td>    
-	<td width="7%"><div align="center">Aprobar</div></td>
-	<td width="7%"><div align="center">Editar</div></td>
-	<td width="7%"><div align="center">Eliminar</div></td>
-  </tr>
+    <tfoot> 
+    <tr>
+<th><small>No.</small></th>    
+	<th><small>Nombre</small></th>
+    <th><small>PPP</small></th>
+   
+	
+	<th><small>Estatus</small></th>
+	<th><small>Indicadores</small></th>
+	<th><small>Componentes</small></th>
+	<th><small>Info.</small></th>    
+	<?php  if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 2 || $_SESSION['id_perfil'] == 3) {  ?>
+    <th><small>Aprobar</small></th>
+	<th><small>Editar</small></th>
+	<th><small>Eliminar</small></th>
+  <?php } ?>
+    
+    </tr>
+ 
   </tfoot>
   </table>
-  </tr>
-  </table>
-
-
 </section>
 </div>

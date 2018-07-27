@@ -17,6 +17,12 @@ if(isset($_GET['token'])){
         case md5(4):
             require('views/planeacion/nuevo_pp.php');
         break;
+        case md5(5):
+            require('views/planeacion/lista_indicadores_pp.php');
+        break; 
+        case md5(6):
+            require('views/planeacion/nuevo_indicador_pp.php');
+        break;     
         default:
             require('views/principal.php');
         break;
