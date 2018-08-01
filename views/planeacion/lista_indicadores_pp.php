@@ -27,16 +27,16 @@
             <div class="box-body table-responsive ">
 
                 <ul class="nav nav-pills">
-  <li><button onclick="nuevo_indicador();" class="btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Indicador </button></li>
+  <li><button onclick="nuevo_indicador_fin();" class="btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Indicador </button></li>
                 </ul>
                 <hr>
               <table class="table table-hover">
                 <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>No.</th>
                   <th>Indicador</th>
                   <th>Meta</th>
-                  <th>Resultado</th>
+                  <th>Sentido</th>
                   <th>Info</th>
                   <th>Editar</th>
                   <th>Eliminar</th>
@@ -44,15 +44,26 @@
                 </thead>
 
                   <tbody>
-                <tr>
-                  <td><?php if(isset($conexion)){echo "conexion existe";}else{echo "no existe la conexion";} ?></td>
-                  <td><?php if(isset($conn)){echo "clase conexion existe";}else{echo "no existe la clase conexion";} ?></td>
+                      <?php
+                        $conexion = $conn->conectar(1);
+                        $indicadores_fin_query = $conexion->query("select id_indicador, nombre, meta, sentido from indicadores_fin where id_pp = ".$_GET['id_proyecto']) or die($conexion->error);
+                       $conexion->close();
+                       unset($conexion);
+                      $contador = 0;
+                      while($res_indicador_fin = $indicadores_fin_query->fetch_array()){
+                          $contador++;
+                      ?>
+
+                      <tr>
+                  <td><?php echo $contador;?></td>
+                  <td><?php echo $res_indicador_fin[1]; ?></td>
                   <td>Meta</td>
                   <td>Resultado</td>
                   <td>Info</td>
                   <td>Editar</td>
                   <td>Eliminar</td>
                 </tr>
+                      <?php } unset($contador); ?>
                 </tbody>
 
                   <tfoot>
@@ -142,7 +153,7 @@
     </section>
 </div>
 <script>
-    function nuevo_indicador(){
-        console.log("works");
+    function nuevo_indicador_fin(){
+        location.href = "main.php?token=<?php echo md5(6); ?>&id_proyecto=<?php echo $_GET['id_proyecto']; ?>&tipo=Fin";
     }
 </script>

@@ -23,6 +23,10 @@ if(isset($_GET['token'])){
         case md5(6):
             require('views/planeacion/nuevo_indicador_pp.php');
         break;     
+
+
+
+        /*============ Cualquier otro sitio llamado que no existe ==============*/
         default:
             require('views/principal.php');
         break;

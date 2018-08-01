@@ -39,6 +39,11 @@ if( isset($_GET['token']) ){
             require("js/planeacion/nuevo_pp.js.php");
             echo '</script>';
         break;
+        case md5(6):
+            echo '<script type="text/javascript">';
+            require("js/planeacion/nuevo_indicador.js.php");
+            echo '</script>';
+        break;
     }
   
 }
