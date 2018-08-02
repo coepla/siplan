@@ -21,7 +21,7 @@
         <div class="col-md-6">
             <div class="form-group">
         <label for="objetivo">Objetivo</label>
-                <textarea rows="18" id="objetivo" name="objetivo" required class="form-control" > </textarea>
+            <textarea rows="18" id="objetivo" name="objetivo" class="form-control" required></textarea>
     </div>
         </div>
         <div class="col-md-6">
@@ -71,17 +71,17 @@
     <div class="col-md-3">
          <div class="form-group">
         <label for="nombre">Dimensión</label>
-        <select  id="tipo" name="tipo" class="form-control"  required>
+        <select  id="dimension" name="dimension" class="form-control"  required>
             <option value=''>-Seleccione-</option>
             <?php
             $conexion = $conn->conectar(1);
-                $consulta_tipo_indicador = $conexion->query("SELECT * FROM tipo_indicador") or die ($conexion->error);
+                $consulta_dimension_indicador = $conexion->query("SELECT * FROM dimension_indicador") or die ($conexion->error);
                 $conexion->close();
                 unset($conexion);
-                while($tipos = $consulta_tipo_indicador->fetch_array()){
-                    echo '<option value="'.$tipos[0].'">'.$tipos[1].'</option>';
+                while($dimension = $consulta_dimension_indicador->fetch_array()){
+                    echo '<option value="'.$dimension[0].'">'.$dimension[1].'</option>';
                 }
-                unset($consulta_tipo_indicador);
+                unset($consulta_dimension_indicador);
             ?>
         </select>
     </div>
@@ -89,17 +89,17 @@
     <div class="col-md-3">
          <div class="form-group">
         <label for="nombre">Frecuencia</label>
-        <select  id="tipo" name="tipo" class="form-control"  required>
+        <select  id="frecuencia" name="frecuencia" class="form-control"  required>
             <option value=''>-Seleccione-</option>
             <?php
             $conexion = $conn->conectar(1);
-                $consulta_tipo_indicador = $conexion->query("SELECT * FROM tipo_indicador") or die ($conexion->error);
+                $consulta_frecuencia_indicador = $conexion->query("SELECT * FROM frecuencia_indicador") or die ($conexion->error);
                 $conexion->close();
                 unset($conexion);
-                while($tipos = $consulta_tipo_indicador->fetch_array()){
-                    echo '<option value="'.$tipos[0].'">'.$tipos[1].'</option>';
+                while($frecuencia = $consulta_frecuencia_indicador->fetch_array()){
+                    echo '<option value="'.$frecuencia[0].'">'.$frecuencia[1].'</option>';
                 }
-                unset($consulta_tipo_indicador);
+                unset($consulta_frecuencia_indicador);
             ?>
         </select>
     </div>
@@ -107,23 +107,70 @@
     <div class="col-md-3">
          <div class="form-group">
         <label for="nombre">Sentido</label>
-       <select  id="tipo" name="tipo" class="form-control"  required>
+       <select  id="sentido" name="sentido" class="form-control"  required>
             <option value=''>-Seleccione-</option>
             <?php
             $conexion = $conn->conectar(1);
-                $consulta_tipo_indicador = $conexion->query("SELECT * FROM tipo_indicador") or die ($conexion->error);
+                $consulta_sentido_indicador = $conexion->query("SELECT * FROM tipo_indicador") or die ($conexion->error);
                 $conexion->close();
                 unset($conexion);
-                while($tipos = $consulta_tipo_indicador->fetch_array()){
-                    echo '<option value="'.$tipos[0].'">'.$tipos[1].'</option>';
+                while($sentido = $consulta_sentido_indicador->fetch_array()){
+                    echo '<option value="'.$sentido[0].'">'.$sentido[1].'</option>';
                 }
-                unset($consulta_tipo_indicador);
+                unset($consulta_sentido_indicador);
             ?>
         </select>
     </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-4">
+         <div class="form-group">
+        <label for="nombre">Unidad de Medida</label>
+         <select required class="form-control" id="u_medida" name="u_medida">
+             <option value=""> - Seleccione - </option>
+             <?php
+                $conexion = $conn->conectar(1);
+                $consulta_u_medida = $conexion->query("SELECT * FROM u_medida_indicadores") or die ($conexion->error);
+                $conexion->close();
+                unset($conexion);
+                while($u_medida = $consulta_u_medida->fetch_array()){
+                    echo "<option value='".$u_medida[0]."'>".$u_medida[1]."</option>";
+                    
+                }
+             ?>
+         </select>
+    </div>
+    </div>
+    <div class="col-md-4">
+         <div class="form-group">
+        <label for="nombre">Meta</label>
+        <input type="number" id="meta" name="nombre" class="form-control"  required>
+    </div>
+    </div>
+    <div class="col-md-4">
+         <div class="form-group">
+        <label for="nombre">Línea Base</label>
+        <input type="number" id="linea_base" name="linea_base" class="form-control"  required>
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        
+        <div class="form-group" id="variables"> 
+            <label>Medio de verificación</label>
+            <input type="text" id="verifica" name="verifica" class="form-control"  required>
+        </div>
+    </div>
+    <div class="col-md-6">
+          <div class="form-group" id="variables"> 
+            <label>Supuesto</label>
+            <input type="text" id="supuesto" name="supuesto" class="form-control"  required>
+        </div>
+    </div>
+</div>
+<button type="submit" class="btn btn-success"> Guardar Indicador</button>
 </form>
 </div>
 </div>

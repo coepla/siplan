@@ -90,3 +90,54 @@ set @c_indicadores_proposito = (select count(*) from indicadores_proposito WHERE
 select (@c_indicadores_fin + @c_indicadores_proposito);
 end $$
 delimiter ;
+
+
+delimiter $$
+create procedure guarda_indicador_fin (
+in i_id_pp int(11),
+in i_nombre varchar(256),
+in i_objetivo text,
+in i_metodo text,
+in i_tipo tinyint,
+in i_dimension tinyint,
+in i_frecuencia tinyint,
+in i_sentido tinyint,
+in i_u_medida varchar(256),
+in i_meta varchar(16),
+in i_medio text,
+in i_supuesto text,
+in i_linea varchar(45)
+)
+begin
+	INSERT INTO indicadores_fin 
+    (
+		id_pp,
+        nombre,
+		objetivo,
+        metodo,
+        tipo,
+        dimension,
+        frecuencia,
+        sentido,
+        u_medida,
+        meta,
+        medio_verificacion,
+        supuesto,
+        linea_base
+        )
+    VALUES
+    (i_id_pp,
+i_nombre,
+i_objetivo,
+i_metodo,
+i_tipo,
+i_dimension,
+i_frecuencia,
+i_sentido,
+i_u_medida,
+i_meta,
+i_medio,
+i_supuesto,
+i_linea);
+end $$
+delimiter ;
