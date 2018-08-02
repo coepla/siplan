@@ -7,7 +7,7 @@
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
-            <? if($_SESSION['id_perfil'] != 2){
+            <?php if($_SESSION['id_perfil'] != 2){
             echo "<select onchange='cambiar_dep(this.value);'>
                <option>".$_SESSION['acronimo_dependencia']."</option>
             </select>";
