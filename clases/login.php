@@ -70,7 +70,7 @@ if( $resultado[0] == '1'){
         
         unset($resultado);
          //guardar en el historial el acceso
-        $consulta = "call historial(".$_SESSION['id_usuario'].",1,'".$_SERVER['REMOTE_ADDR']."')";
+        $consulta = "call historial_login(".$_SESSION['id_usuario'].",1,'".$_SERVER['REMOTE_ADDR']."')";
          ejecutarConsultas($consulta,$conn,2);
          //redireccionar al dashboards
          header("location:../main.php");
