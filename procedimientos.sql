@@ -31,7 +31,7 @@ end $$
 delimiter ;
 
 delimiter $$
-create procedure historial (in u smallint, in e smallint,in i varchar(15) )
+create procedure historial_login (in u smallint, in e smallint,in i varchar(15) )
 begin
     INSERT INTO historial (id_usuario,fecha,hora,evento,ipaddress) values (u, curdate(), curtime(), e, i);
 	select true;

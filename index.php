@@ -97,11 +97,15 @@ header ("Pragma: no-cache"); //PARANOIA, NO GUARDAR EN CACHE
     <hr>
     <div class="form-group">
                 <label>-Ejercicios Anteriores-</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">-Seleccione-</option>
-                  <option>2018</option>
-                  <option>2017</option>
-                  <option>2016</option>
+                <select class="form-control select2" style="width: 100%;" onchange="cambiar_ejercicio(this.value)">
+                  <option selected="selected" value="">-Seleccione-</option>
+                  <option value="7">2018</option>
+                  <option value="6">2017</option>
+                  <option value="5">2016</option>
+                  <option value="4">2015</option>
+                  <option value="3">2014</option>
+                  <option value="2">2013</option>
+                  <option value="1">2012</option>
                 </select>
               </div>
     </div>
@@ -109,7 +113,7 @@ header ("Pragma: no-cache"); //PARANOIA, NO GUARDAR EN CACHE
 <hr>
     <p>Sistema Integral de Información para la Planeación de Gobierno del Estado de Zacatecas</p>
     <p style="color:#f00;">V 7.0</p>
-    <a href="#" class="text-center">Acerca del SIPLAN</a>
+   <!-- <a href="#" class="text-center">Acerca del SIPLAN</a> -->
 
   </div>
   <!-- /.login-box-body -->
@@ -137,6 +141,33 @@ header ("Pragma: no-cache"); //PARANOIA, NO GUARDAR EN CACHE
     //Initialize Select2 Elements
     $('.select2').select2();
   });
+
+    function cambiar_ejercicio(e){
+        switch(e){
+            case "1":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2012";
+            break;
+            case "2":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2013";
+            break;
+            case "3":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2014";
+            break;
+            case "4":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2015";
+            break;
+            case "5":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2016";
+            break;
+            case "6":
+                location.href="http://siplan.zacatecas.gob.mx/";
+            break;
+            case "7":
+                location.href="http://siplan.zacatecas.gob.mx/siplan2018";
+            break;
+
+        }
+    }
     </script>
 </body>
 </body>
