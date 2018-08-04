@@ -26,6 +26,12 @@ if(isset($_GET['token'])){
 
 
 
+        /*============= Administracion de usuarios ============= */
+        case md5(900):
+            require('views/usuarios/perfil_usuario.php');
+        break;
+
+
         /*============ Cualquier otro sitio llamado que no existe ==============*/
         default:
             require('views/principal.php');

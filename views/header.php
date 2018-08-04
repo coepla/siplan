@@ -58,7 +58,7 @@ if(isset($_GET['token']) == md5(4)){
 <body class="hold-transition skin-green-light sidebar-mini">
 <div class="wrapper">
   <header class="main-header">
-    <a href="../../index2.html" class="logo">
+    <a href="main.php" class="logo">
       <span class="logo-mini"><b>S</b>PL</span>
       <span class="logo-lg"><b>SIPLAN</b></span>
     </a>
@@ -75,7 +75,7 @@ if(isset($_GET['token']) == md5(4)){
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="img/usuario.png" class="user-image">
-              <span class="hidden-xs">Usuario Nombre</span>
+              <span class="hidden-xs"><?php echo $_SESSION['nombre_usuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -83,8 +83,8 @@ if(isset($_GET['token']) == md5(4)){
                 <img src="img/usuario.png" class="img-circle">
 
                 <p>
-                  Nombre de Usuario
-                  <small>Dependencia</small>
+                  <?php echo $_SESSION['nombre_usuario']; ?>
+                  <small><?php echo $_SESSION['acronimo_dependencia']; ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -94,7 +94,7 @@ if(isset($_GET['token']) == md5(4)){
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Configuración</a>
+                  <a href="main.php?token=<?php echo md5(900); ?>" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
                   <a href="index.php" class="btn btn-default btn-flat">Salir</a>
