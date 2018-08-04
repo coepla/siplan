@@ -8,7 +8,7 @@ GRANT EXECUTE ON PROCEDURE siplan2019.usuario_info TO 'siplan2019_sel'@'localhos
 -- CREATE USER 'siplan2019_ins'@'localhost' IDENTIFIED BY '|.aLw%LdzO%<,w#';
 GRANT SELECT ON siplan2019.* TO 'siplan2019_ins'@'localhost';
 GRANT INSERT ON siplan2019.* TO 'siplan2019_ins'@'localhost';
-GRANT EXECUTE ON PROCEDURE siplan2019.historial TO 'siplan2019_ins'@'localhost';
+GRANT EXECUTE ON PROCEDURE siplan2019.historial_login TO 'siplan2019_ins'@'localhost';
 grant execute on procedure siplan2019.guardar_ppp to 'siplan2019_ins'@'localhost';
 grant execute on procedure siplan2019.guardar_ppi to 'siplan2019_ins'@'localhost';
 grant execute on procedure siplan2019.contar_indicadores_pp to 'siplan2019_sel'@'localhost';
