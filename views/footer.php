@@ -50,4 +50,25 @@ if( isset($_GET['token']) ){
     
 ?>
 
- 
+<?php if($_SESSION['id_perfil'] != 2){ ?>
+<script type="text/javascript">
+    function cambiar_dep(dependencia){
+        if(dependencia != 0){
+
+        $.ajax({
+        method: "POST",
+        url: "clases/cambiar_dep.php",
+        data: { dep: dependencia }
+        })
+        .done(function( msg ) {
+        console.log(msg);
+        location.reload();
+    });
+        }//end if
+
+
+    } //end function
+</script>
+<?php
+}
+?>

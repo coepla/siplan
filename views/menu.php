@@ -5,11 +5,20 @@
           <img src="img/usuario.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p> <?php echo $_SESSION['nombre_usuario']; ?> </p>
             <?php if($_SESSION['id_perfil'] != 2){
             echo "<select onchange='cambiar_dep(this.value);'>
-               <option>".$_SESSION['acronimo_dependencia']."</option>
-            </select>";
+            <option value='0'>".$_SESSION['acronimo_dependencia']."</option>";
+            $conexion = $conn->conectar(1);
+            $sel_deps = $conexion->query("SELECT id_dependencia,acronimo FROM dependencias ORDER BY id_dependencia ASC");
+            $conexion->close();
+            unset($conexion);
+            while($res_deps = $sel_deps->fetch_array()){
+                echo "<option value='".$res_deps[0]."'>".$res_deps[0]." - ".$res_deps[1]."</option>";
+            }
+            unset($sel_deps);
+            unset($res_deps);
+            echo "</select>";
 }else{
            echo $_SESSION['acronimo_dependencia']; }?>
         </div>
