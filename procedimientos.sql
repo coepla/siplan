@@ -33,7 +33,7 @@ delimiter ;
 delimiter $$
 create procedure historial_login (in u smallint, in e smallint,in i varchar(15) )
 begin
-    INSERT INTO historial (id_usuario,fecha,hora,evento,ipaddress) values (u, curdate(), curtime(), e, i);
+    INSERT INTO historial (id_usuario,fecha,hora,evento,ipaddress,identificador) values (u, curdate(), curtime(), e, i, 0);
 	select true;
 end $$
 delimiter ;
