@@ -543,6 +543,7 @@ function guardar(){
     var validado = validar();
     if($('#prioritario').prop('checked')){ var prioritario = "guardar_ppp"; } else { var prioritario = "guardar_ppi";}
     if(validado){
+        console.log("validado");
         validado = false;
      $.ajax({
         method: "POST",

@@ -193,6 +193,28 @@ CREATE TABLE `programas_presupuestarios` (
   UNIQUE KEY `clave_UNIQUE` (`clave`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `grupo_vulnerable` (
+  `id_vulnerable` int(11) NOT NULL,
+  `descripcion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_vulnerable`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `marco_estrategico` (
+  `id_dependencia` smallint(6) NOT NULL DEFAULT '0',
+  `res_poa` text,
+  `activ_sustantivas` text,
+  `mision` text,
+  `vision` text,
+  `objetivo_estrategico` text,
+  `perspec_anual` text,
+  `firmas_validacion` text,
+  `ejercicio` varchar(4) NOT NULL,
+  `completo` char(1) DEFAULT '0',
+  PRIMARY KEY (`id_dependencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE `proyectos` (
   `id_proyecto` smallint(6) NOT NULL AUTO_INCREMENT,
   `id_dependencia` tinyint(3) unsigned NOT NULL,

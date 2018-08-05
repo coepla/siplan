@@ -36,10 +36,11 @@ class programa_presupuestario{
         $funcion,
         $subfuncion,
         '$observaciones',
-        $dependencia
+        $dependencia,
+        ".$_SESSION['id_usuario'].",
+        '".$_SERVER['REMOTE_ADDR']."'
         )";
         if( $conexion->query($consulta) ){
-            // consulta guardar istorial
             return "guardado";
         }else{
             return "error".$conexion->error;
@@ -76,7 +77,9 @@ class programa_presupuestario{
         $funcion,
         $subfuncion,
         '$observaciones',
-        $dependencia
+        $dependencia,
+         ".$_SESSION['id_usuario'].",
+        '".$_SERVER['REMOTE_ADDR']."'
         )";
         if( $conexion->query($consulta) ){
             // consulta guardar istorial

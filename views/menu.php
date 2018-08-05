@@ -34,11 +34,13 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="main.php?token=<?php echo md5(1); ?>"><i class="fa fa-circle-o"></i> Programas Presupuestarios</a></li>
+          <?php /* ====== habilitar hasta que el modulo este listo
             <li><a href="#"><i class="fa fa-circle-o"></i> Obras y Acciones</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Inversión</a></li>
+        */ ?>
           </ul>
         </li>
-
+<?php /*
        <li class="treeview">
           <a href="#">
             <i class="fa fa-tasks"></i> <span>Evaluación</span>
@@ -86,7 +88,7 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li>
           </ul>
         </li>
-
+*/ ?>
     <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text-o"></i> <span>Reportes</span>
@@ -95,14 +97,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Evaluación Trimestral</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> MIR </a></li>
+           <?php /* <li><a href="#"><i class="fa fa-circle-o"></i> Evaluación Trimestral</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Seguimiento</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Avance Fis/Fin</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Cuenta Pública</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li> */ ?>
           </ul>
         </li>
-
+<?php /*
         <li class="treeview">
           <a href="#">
             <i class="fa fa-list"></i> <span>Estados Financieros</span>
@@ -134,6 +137,7 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li>
           </ul>
         </li>
+        */ ?>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-list-alt"></i> <span>Catálogos</span>
@@ -150,7 +154,7 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Unidades Responsables</a></li>
           </ul>
         </li>
-
+<?php /*
             <li class="treeview">
           <a href="#">
             <i class="fa fa-globe"></i> <span>Módulo Municipal</span>
@@ -182,7 +186,8 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Indicadores</a></li>
           </ul>
         </li>
-
+        */ ?>
+<?php if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 3) { ?>
     <li class="treeview">
           <a href="#" style="color:#f00">
             <i class="fa fa-cogs"></i> <span>Administración</span>
@@ -196,8 +201,11 @@
             <li><a href="#" style="color:#f00"><i class="fa fa-circle-o"></i> Avance Fis/Fin</a></li>
             <li><a href="#" style="color:#f00"><i class="fa fa-circle-o"></i> Cuenta Pública</a></li>
             <li><a href="#" style="color:#f00"><i class="fa fa-circle-o"></i> Indicadores</a></li>
+            <?php if($_SESSION['id_perfil'] == 1) {?>
+              <li><a href="#" style="color:#f00"><i class="fa fa-circle-o"></i> Actualizar Sistema</a></li>
+              <?php } ?>
           </ul>
-        </li>
+        </li><?php } ?>
 
 
       </ul>

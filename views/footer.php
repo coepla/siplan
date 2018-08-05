@@ -16,7 +16,7 @@ if( isset($_GET['token']) ){
     switch($_GET['token']){
         case md5(1):
             ?>
-         <script src="js/jquery.dataTables.min.js"></script>
+         <script src="js/jquery.dataTables.min.js?v=1.1"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
 <script>
   $(function () {

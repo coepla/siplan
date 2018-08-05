@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(!isset($_SESSION)){
 ?>
 <script type="text/javascript">
@@ -30,9 +31,10 @@ $perspectiva ="n.a"; //trim($_POST["perspectiva"]);
 $url = md5(1);
 if($accion == 0){
  $consulta_insertar = "insert into marco_estrategico(id_dependencia,res_poa,activ_sustantivas,mision,vision,objetivo_estrategico,perspec_anual,firmas_validacion,ejercicio,completo) values (".$_SESSION['id_dependencia'].",'$res_poa','$actividades','$mision','$vision','$objetivo','$perspectiva','n.a','".$_SESSION['ejercicio']."','1')";
-    $consulta_insertar;
-   mysql_query($consulta_insertar,$siplan_data_conn)or die(mysql_error());
-	 echo "<script type='text/javascript'>alert('Marco Estrat\u00e9gico guardado correctamente'); window.location='main.php?token=".$url."' ;</script>";
+ mysql_query($consulta_insertar,$siplan_data_conn)or die(mysql_error());
+ mysql_query("INSERT INTO historial (id_usuario,fecha,hora,evento,ipaddress,identificador) VALUES (".$_SESSION['id_usuario'].",curdate(),curtime(),3,'".$_SERVER['REMOTE_ADDR']."',0)",$siplan_data_conn) or die (mysql_error());
+
+ echo "<script type='text/javascript'>alert('Marco Estrat\u00e9gico guardado correctamente'); window.location='main.php?token=".$url."' ;</script>";
 	 
 }
 if($accion == 1){
