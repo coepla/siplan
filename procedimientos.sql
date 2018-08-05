@@ -144,3 +144,20 @@ i_supuesto,
 i_linea);
 end $$
 delimiter ;
+
+
+delimiter $$
+create procedure agregar_indicador( in i_nivel_indicador tinyint, in i_proyecto smallint, in i_componente smallint, in i_actividad smallint, in i_nombre varchar(256), in i_objetivo text,
+in i_metodo tinyint, in i_tipo tinyint, in i_dimension tinyint, in i_frecuencia tinyint, in i_sentido tinyint, in i_u_medida varchar(256), in i_meta varchar(16), in i_linea varchar(16),
+in i_medio text, in i_supuesto text, in i_var1 varchar(256), in i_var2 varchar(256), in i_var3 varchar(256), in i_var4 varchar(256), in i_var5 varchar(256), in i_var6 varchar(256),
+in i_usuario smallint, in i_ip varchar(10) )
+begin
+	insert into indicadores
+    (nivel_indicador, id_proyecto, id_componente, id_actividad, nombre, objetivo, metodo, tipo, dimension, frecuencia, sentido, u_medida, meta, linea_base, medio_verificacion, supuesto)
+    values
+    (i_nivel_indicador, i_proyecto, i_componente, i_actividad, i_nombre, i_objetivo, i_metodo, i_tipo, i_dimension, i_frecuencia, i_sentido, i_u_medida, i_meta, i_linea_base, i_medio_verificacion, i_supuesto);
+    set @insertado = last_insert_id();
+    insert into variables_indicadores (id_indicador,var1,var2,var3,var4,var5,var6) values (@insertado,i_var1,i_var2,i_var3,i_var4,i_var5,i_var6);
+    insert into historial (id_usuario,fecha,hora,evento,ipaddress,identificador) values (i_usuario,curdate(),curtime(),15,i_ip,@insertado);
+end;
+delimiter $$

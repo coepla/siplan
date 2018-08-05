@@ -118,7 +118,7 @@ while ($resproyectos = $consulta_proyectos->fetch_assoc()) { ?>
 		   break; 
 	   } ?>
     </td>
-    <td><a class="text text-navy" href="main.php?token=<?php echo md5(5); ?>&id_proyecto=<?php  echo $resproyectos['id_proyecto']; ?>"> i </a></td>
+    <td><a class="text text-navy" href="main.php?token=<?php echo md5(5); ?>&id_proyecto=<?php  echo $resproyectos['id_proyecto']; ?>"> <i class="fa fa-line-chart" aria-hidden="true"></i> </a></td>
     <td><a class="text text-navy" href="#"> c </a></td>
     <td><a class="text text-navy" href="#"> i </a></td>
     <?php  if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 2 || $_SESSION['id_perfil'] == 3) {  ?>

@@ -21,9 +21,9 @@ function cargar_variables(v){
 
 function guardar(){
   
-   if(document.getElementById('var2')){ v2 = $('#var2').val(); }else{ v2 = 'null'; }
-   if(document.getElementById('var3')){ v3 = $('#var3').val(); }else{ v3 = 'null'; }
-   if(document.getElementById('var4')){ v4 = $('#var4').val(); }else{ v4 = 'null'; }
+   if(document.getElementById('var2')){ v2 = $('#var2').val(); }else{ v2 = ' '; }
+   if(document.getElementById('var3')){ v3 = $('#var3').val(); }else{ v3 = ' '; }
+   if(document.getElementById('var4')){ v4 = $('#var4').val(); }else{ v4 = ' '; }
    
 
      $.ajax({
@@ -31,15 +31,19 @@ function guardar(){
         url: "clases/planeacion/indicadores.php",
         data: {
            accion: 'agregar',
-           tipo_indicador:   '<?php echo $_GET['tipo']; ?>',
+           nivel_indicador:   '<?php echo $_GET['tipo']; ?>',
            proyecto: <?php echo $_GET['id_proyecto']; ?>,
+           componente: <?php if(isset($_GET['id_componente'])){echo $_GET['id_componente']; }else{ echo 0; } ?>,
+           actividad: <?php if(isset($_GET['id_actividad'])){echo $_GET['id_actividad']; }else{ echo 0; } ?>,
            nombre: $('#nombre').val(),
            objetivo: $('#objetivo').val(),
            formula: $('#formula').val(),
-           var1: $('#var1').val(),
-           var2: v2,
-          var2: v3,
-            var4: v4, 
+            var1: $('#var1').val(),
+            var2: v2,
+            var3: v3,
+            var4: v4,
+            var5: ' ',
+            var6: ' ',
            tipo: $('#tipo').val(),
           dimension: $('#dimension').val(),
 frecuencia: $('#frecuencia').val(),
@@ -54,7 +58,13 @@ supuesto: $('#supuesto').val()
         .done(function( msg ) {
         console.log(msg);
         alert( 'Se ha guardado correctamente el indicador' );
-        // location.href = 'main.php?token=c4ca4238a0b923820dcc509a6f75849b';
+<?php
+ if(isset($_GET['id_componente'])){$componente ="&id_componente=".$_GET['id_componente'];  }else{$componente="";}
+ if(isset($_GET['id_actividad'])){$componente ="&id_actividad=".$_GET['id_actividad'];  }else{$actividad="";}
+ echo "location.href = 'main.php?token=e4da3b7fbbce2345d7772b0674a318d5&id_proyecto=".$_GET['id_proyecto'].$componente.$actividad."';";
+
+?>
+
     });
     
     return false;

@@ -8,7 +8,7 @@
 <h3 class="box-title">Nuevo Indicador <?php echo $_GET['tipo']; ?> - <small><?php echo  $_SESSION['acronimo_dependencia']; ?> </small></h3>
 </div>
 <div class="box-body">
-<a href="main.php?token=<?php echo md5(5); ?>" class="btn-sm btn-success">
+<a href="main.php?token=<?php echo md5(5); ?>&id_proyecto=<?php echo $_GET['id_proyecto']; ?>" class="btn-sm btn-success">
 <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Lista de Indicadores</a>
 <hr>
 <h4><span class="text text-success">Agregar indicador</span></h4>
@@ -111,7 +111,7 @@
             <option value=''>-Seleccione-</option>
             <?php
             $conexion = $conn->conectar(1);
-                $consulta_sentido_indicador = $conexion->query("SELECT * FROM tipo_indicador") or die ($conexion->error);
+                $consulta_sentido_indicador = $conexion->query("SELECT * FROM sentido_indicador") or die ($conexion->error);
                 $conexion->close();
                 unset($conexion);
                 while($sentido = $consulta_sentido_indicador->fetch_array()){

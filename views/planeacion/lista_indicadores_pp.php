@@ -36,6 +36,7 @@
                   <th>No.</th>
                   <th>Indicador</th>
                   <th>Meta</th>
+                  <th>U. Medida</th>
                   <th>Sentido</th>
                   <th>Info</th>
                   <th>Editar</th>
@@ -46,8 +47,15 @@
                   <tbody>
                       <?php
                         $conexion = $conn->conectar(1);
+                        $indicadores_fin_query = $conexion->query("select
+                        i.id_indicador,
+                        i.nombre,
+                        i.meta,
+                        i.u_medida,
+                        i.sentido
+                        from indicadores i
 
-                        $indicadores_fin_query = $conexion->query("select id_indicador, nombre, meta, sentido from indicadores where id_proyecto = ".$_GET['id_proyecto']." AND nivel_indicador = 1") or die($conexion->error);
+                        where i.id_proyecto = ".$_GET['id_proyecto']." AND i.nivel_indicador = 1") or die($conexion->error);
                        $conexion->close();
                        unset($conexion);
                       $contador = 0;
@@ -58,8 +66,9 @@
                       <tr>
                   <td><?php echo $contador;?></td>
                   <td><?php echo $res_indicador_fin[1]; ?></td>
-                  <td>Meta</td>
-                  <td>Resultado</td>
+                  <td><?php echo $res_indicador_fin[2]; ?></td>
+                <td>U medida</td>
+                <td>Sentido</td>
                   <td>Info</td>
                   <td>Editar</td>
                   <td>Eliminar</td>
@@ -72,7 +81,8 @@
                   <th>Id</th>
                   <th>Indicador</th>
                   <th>Meta</th>
-                  <th>Resultado</th>
+                  <th>U. Medida</th>
+                  <th>Sentido</th>
                   <th>Info</th>
                   <th>Editar</th>
                   <th>Eliminar</th>
@@ -173,5 +183,8 @@
 <script>
     function nuevo_indicador_fin(){
         location.href = "main.php?token=<?php echo md5(6); ?>&id_proyecto=<?php echo $_GET['id_proyecto']; ?>&tipo=Fin";
+    }
+    function nuevo_indicador_proposito(){
+        location.href = "main.php?token=<?php echo md5(6); ?>&id_proyecto=<?php echo $_GET['id_proyecto']; ?>&tipo=Propósito";
     }
 </script>

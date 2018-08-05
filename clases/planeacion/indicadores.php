@@ -10,11 +10,26 @@ class indicadores {
     
     function agregar($vars,$c){
         
-        switch($vars['tipo_indicador']){
+        switch( $vars['nivel_indicador'] ) {
+            case "Fin":
+                $nivel = 1;
+            break;
+            case "Propósito":
+                $nivel = 2;
+            break;
+            case "Componente":
+                $nivel = 3;
+            break;
+            case "Actividad":
+                $nivel = 4;
+            break;
                 
-            case 'Fin':
-                $consulta = "call guarda_indicador_fin
-                (".$vars['proyecto'].",
+        }
+                $consulta = "call agregar_indicador
+                ($nivel,
+                ".$vars['proyecto'].",
+                ".$vars['componente'].",
+                ".$vars['actividad'].",
                   '".$vars['nombre']."',
                   '".$vars['objetivo']."',
                   '".$vars['formula']."',
@@ -24,23 +39,19 @@ class indicadores {
                   ".$vars['sentido'].",
                   '".$vars['u_medida']."',
                   '".$vars['meta']."',
+                  '".$vars['linea_base']."',
                   '".$vars['verifica']."',
                   '".$vars['supuesto']."',
-                  '".$vars['linea_base']."'
+                  '".$vars['var1']."',
+                  '".$vars['var2']."',
+                  '".$vars['var3']."',
+                  '".$vars['var4']."',
+                  '".$vars['var5']."',
+                  '".$vars['var6']."',
+                  ".$_SESSION['id_usuario'].",
+                  '".$_SERVER['REMOTE_ADDR']."'
                 )
                 ";
-            break;
-            case 'Proposito':
-                return "error";
-            break;    
-            case 'Componente':
-                return "error";
-            break;
-            case 'Actividad':
-                return "error";
-            break;    
-        }
-        
         $conexion = $c->conectar(2);
         if($conexion->query($consulta)){
             return "guardado";
