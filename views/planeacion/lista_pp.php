@@ -119,12 +119,12 @@ while ($resproyectos = $consulta_proyectos->fetch_assoc()) { ?>
 	   } ?>
     </td>
     <td><a class="text text-navy" href="main.php?token=<?php echo md5(5); ?>&id_proyecto=<?php  echo $resproyectos['id_proyecto']; ?>"> <i class="fa fa-line-chart" aria-hidden="true"></i> </a></td>
-    <td><a class="text text-navy" href="#"> c </a></td>
-    <td><a class="text text-navy" href="#"> i </a></td>
+    <td><a class="text text-navy" href="main.php?token=<?php echo md5(7); ?>&id_proyecto=<?php  echo $resproyectos['id_proyecto']; ?>"> <i class="fa fa-list-alt" aria-hidden="true"></i>  </a></td>
+    <td><a class="text text-navy" href="#"> <i class="fa fa-info-circle" aria-hidden="true"></i>  </a></td>
     <?php  if($_SESSION['id_perfil'] == 1 || $_SESSION['id_perfil'] == 2 || $_SESSION['id_perfil'] == 3) {  ?>
-    <td><a class="text text-success" href="javascript:aprobar_proyecto(<?php echo $resproyectos['id_proyecto']; ?>)">A</a></td>
-    <td><a class="text text-orange" href="#">E</a></td>
-    <td><a class="text text-danger" href="#">E</a></td>
+    <td><a class="text text-success" href="javascript:aprobar_proyecto(<?php echo $resproyectos['id_proyecto']; ?>)"><i class="fa fa-check-square-o" aria-hidden="true"></i></a></td>
+    <td><a class="text text-orange" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+    <td><a class="text text-danger" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
     <?php } ?>
     </tr>
     <?php } ?>

@@ -28,6 +28,7 @@
 
                 <ul class="nav nav-pills">
   <li><button onclick="nuevo_indicador_fin();" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Indicador </button></li>
+                    <li><button class="btn btn-success" onclick="window.location.href='main.php?token=c4ca4238a0b923820dcc509a6f75849b'">Regresar a Lista de Proyectos</button></li>
                 </ul>
                 <hr>
               <table class="table table-hover">
@@ -118,6 +119,7 @@
             <div class="box-body table-responsive">
                 <ul class="nav nav-pills">
   <li><button onclick="nuevo_indicador_proposito();" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Indicador </button></li>
+                    <li><button class="btn btn-success" onclick="window.location.href='main.php?token=c4ca4238a0b923820dcc509a6f75849b'">Regresar a Lista de Proyectos</button></li>
                 </ul>
                 <hr>
            <table class="table table-hover">
